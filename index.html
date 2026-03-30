@@ -117,6 +117,7 @@
             "I choose you\n🥰",
             "You're my peace",
             "My safe space",
+            "You're Beautiful\n😘",
             "You're one in a billion",
             "And yeah… I Love You\n😘"
         ];
@@ -169,6 +170,14 @@
             }
             messageElement.style.opacity = opacity;
         }
+
+        let fadingScene = false; // starts false
+let sceneOpacity = 1;     // full opacity
+
+        audio.addEventListener('ended', () => {
+    fadingScene = true; // trigger scene fade
+});
+        
         // === ANIMATION LOOP ===
         function animate() {
             requestAnimationFrame(animate);
@@ -193,6 +202,12 @@
             updateMessage();
 
             renderer.render(scene, camera);
+
+            if(fadingScene && sceneOpacity > 0){
+    sceneOpacity -= 0.005; // slower fade
+    renderer.domElement.style.opacity = sceneOpacity; // fade canvas
+    messageElement.style.opacity = sceneOpacity;      // fade message
+            }
         }
 
         // === HANDLE WINDOW RESIZE ===
