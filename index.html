@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Password</title>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: black; /* solid black background */
+        color: #ff4d6d;   /* pink text */
+        font-family: Arial, sans-serif;
+        flex-direction: column;
+        margin: 0;
+    }
+
+    #container {
+        transition: opacity 1s ease;
+        opacity: 1;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+    }
+
+    input {
+        padding: 12px 20px;
+        font-size: 1.2rem;
+        border-radius: 8px;
+        border: 2px solid #ff4d6d;
+        background: black;
+        color: #ff4d6d;
+        text-align: center;
+        outline: none;
+        margin-bottom: 20px;
+        width: 250px;
+    }
+
+    input::placeholder {
+        color: #ff4d6d;
+    }
+
+    button {
+        padding: 12px 30px;
+        font-size: 1.2rem;
+        border: 2px solid #ff4d6d;
+        border-radius: 8px;
+        background: black;
+        color: #ff4d6d;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    button:hover {
+        background: #ff4d6d;
+        color: black;
+    }
+
+    #error {
+        color: #ff4d6d;
+        margin-top: 15px;
+        display: none;
+        font-size: 1rem;
+    }
+</style>
+</head>
+<body>
+
+<div id="container">
+    <h1>Enter Password</h1>
+    <input type="password" id="passwordInput" placeholder="Password">
+    <button id="enterBtn">Enter</button>
+    <div id="error">Incorrect password!</div>
+</div>
+
+<script>
+const correctPassword = "BhigTerry"; // your secret password
+const btn = document.getElementById('enterBtn');
+const input = document.getElementById('passwordInput');
+const error = document.getElementById('error');
+
+btn.addEventListener('click', () => {
+    if(input.value === correctPassword){
+        document.getElementById('container').style.opacity = 0; // fade out
+        setTimeout(() => {
+            window.location.href = "gift.html"; // go to gift page
+        }, 1000); 
+    } else {
+        error.style.display = "block";
+        input.value = "";
+        input.focus();
+    }
+});
+
+// allow pressing Enter key
+input.addEventListener('keyup', (e) => {
+    if(e.key === "Enter") btn.click();
+});
+</script>
+
+</body>
+</html>
