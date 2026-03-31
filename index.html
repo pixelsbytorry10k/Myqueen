@@ -21,20 +21,23 @@
         transition: opacity 1s ease;
         opacity: 1;
         text-align: center;
-    }
-    .container {
-    text-align: center;
+        text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content:center;
     gap: 25px;
-    width: 100%; /* controls EVERYTHING */
+    width: 100%;
+    }
+    .container {
+     /* controls EVERYTHING */
     }
     
 
     h1 {
         font-size: 2.5rem;
         margin-bottom: 30px;
+        text-align:center;
     }
 
     .input-container {
@@ -46,7 +49,7 @@
     width: 100%;
     padding: 14px 45px 14px 20px;
     font-size: 1.5rem;        /* bigger text → bigger dots */
-    letter-spacing: 5px;      /* premium spacing */
+    letter-spacing: 2px;      /* premium spacing */
     font-weight: bold;        /* thicker dots */
     border-radius: 10px;
     border: 2px solid #ff4d6d;
@@ -117,7 +120,7 @@
 </head>
 <body>
 
-<div class="container" id="container">
+<div id="container">
     <h1>Enter Password</h1>
     <div class="input-container">
         <input type="password" id="passwordInput" placeholder="Password">
