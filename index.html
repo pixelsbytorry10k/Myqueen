@@ -28,22 +28,59 @@
         margin-bottom: 30px;
     }
 
-    input {
-        padding: 12px 20px;
-        font-size: 1.2rem;
-        border-radius: 8px;
-        border: 2px solid #ff4d6d;
-        background: black;
-        color: #ff4d6d;
-        text-align: center;
-        outline: none;
-        margin-bottom: 20px;
-        width: 250px;
-    }
+    .input-container {
+    position: relative;
+    width: 260px;
+}
 
-    input::placeholder {
-        color: #ff4d6d;
-    }
+.input-container input {
+    width: 100%;
+    padding: 14px 45px 14px 20px;
+    font-size: 1.5rem;        /* bigger text → bigger dots */
+    letter-spacing: 5px;      /* premium spacing */
+    font-weight: bold;        /* thicker dots */
+    border-radius: 10px;
+    border: 2px solid #ff4d6d;
+    background: black;
+    color: white;             /* typed password = white */
+    text-align: center;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+/* Placeholder */
+.input-container input::placeholder {
+    color: white;
+    opacity: 0.6;
+    letter-spacing: normal; /* keeps placeholder normal */
+    font-weight: normal;
+}
+
+/* Focus glow */
+.input-container input:focus {
+    box-shadow: 0 0 10px #ff4d6d;
+    border-color: #ff4d6d;
+}
+
+/* Eye icon */
+#togglePassword {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #ff4d6d;
+    font-size: 1.3rem;
+    user-select: none;
+    transition: transform 0.2s ease;
+}
+
+/* slight tap animation */
+#togglePassword:active {
+    transform: translateY(-50%) scale(0.9);
+}
+
+    
 
     button {
         padding: 12px 30px;
@@ -74,7 +111,10 @@
 
 <div id="container">
     <h1>Enter Password</h1>
-    <input type="password" id="passwordInput" placeholder="Password">
+    <div class="input-container">
+        <input type="password" id="passwordInput" placeholder="Password">
+        <span id="togglePassword">👁️</span>
+    </div>
     <button id="enterBtn">Enter</button>
     <div id="error">Incorrect password!</div>
 </div>
@@ -98,10 +138,26 @@ btn.addEventListener('click', () => {
     }
 });
 
+
+const toggle = document.getElementById('togglePassword');
+const passwordInput = document.getElementById('passwordInput');
+
+toggle.addEventListener('click', () => {
+    if(passwordInput.type === "password"){
+        passwordInput.type = "text";
+        toggle.textContent = "🙈";
+    } else {
+        passwordInput.type = "password";
+        toggle.textContent = "👁️";
+    }
+});
+    
 // allow pressing Enter key
 input.addEventListener('keyup', (e) => {
     if(e.key === "Enter") btn.click();
 });
+
+    
 </script>
 
 </body>
