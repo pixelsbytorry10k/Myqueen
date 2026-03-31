@@ -106,6 +106,7 @@
         // === LOVE TEXT LINES ===
         const messages = [
             "Hey Princess❤️‍🩹\nTap me!",
+            "Hey Bby Gurl💕",
             "I made something small for you",
             "Just read this slowly… it’s for you.",
             "You know what I like about you?",
@@ -203,11 +204,16 @@ let sceneOpacity = 1;     // full opacity
             updateMessage();
 
             renderer.render(scene, camera);
-
-            if(fadingScene && sceneOpacity > 0){
-    sceneOpacity -= 0.005; // slower fade
-    renderer.domElement.style.opacity = sceneOpacity; // fade canvas
-    messageElement.style.opacity = sceneOpacity;      // fade message
+            if(fadingScene){
+    if(sceneOpacity > 0){
+        sceneOpacity -= 0.005;
+        renderer.domElement.style.opacity = sceneOpacity;
+        messageElement.style.opacity = sceneOpacity;
+    } else {
+    setTimeout(() => {
+        window.location.href = "index.html";
+    }, 2000); // two seconds pause on full black
+    }
             }
         }
 
