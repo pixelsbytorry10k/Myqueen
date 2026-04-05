@@ -3,176 +3,163 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Password</title>
+<title>Biometric Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
 <style>
-    body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background: black; /* solid black background */
-        color: #ff4d6d;   /* pink text */
-        font-family: Arial, sans-serif;
-        flex-direction: column;
-        margin: 0;
-    }
-
-    #container {
-        transition: opacity 1s ease;
-        opacity: 1;
-        text-align: center;
-        text-align: center;
+  body {
+  
+    font-family: 'Orbitron', sans-serif;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content:center;
-    gap: 25px;
-    width: 100%;
-    }
-    .container {
-     /* controls EVERYTHING */
-    }
-    
+    height: 100vh;
+    background: linear-gradient(135deg, #0f2027, #000, #ff4d6d);
+    margin: 0;
+    color: #fff;
+  }
 
-    h1 {
-        font-size: 2.5rem;
-        margin-bottom: 30px;
-        text-align:center;
-    }
-
-    .input-container {
-    position: relative;
-    width: calc(100% - 40px); /* subtract left+right margin */
-    margin-inline: 20px;
-    justify-self: center;
-}
-
-.input-container input {
-    width: 75%;
-    padding: 14px 45px 14px 20px;
-    font-size: 1.5rem;        /* bigger text → bigger dots */
-    letter-spacing: 2px;      /* premium spacing */
-    font-weight: bold;        /* thicker dots */
-    border-radius: 10px;
-    border: 2px solid #ff4d6d;
-    background: black;
-    color: white;             /* typed password = white */
+  .container {
     text-align: center;
-    outline: none;
-    transition: all 0.3s ease;
-}
+    background: rgba(0,0,0,0.6);
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(255, 77, 109, 0.5);
+  }
 
-/* Placeholder */
-.input-container input::placeholder {
-    color: white;
-    opacity: 0.6;
-    letter-spacing: normal; /* keeps placeholder normal */
-    font-weight: normal;
-}
-
-/* Focus glow */
-.input-container input:focus {
-    box-shadow: 0 0 10px #ff4d6d;
-    border-color: #ff4d6d;
-}
-
-/* Eye icon */
-#togglePassword {
-    position: absolute;
-    top: 50%;
-    right:13px;
-    transform: translateY(-50%);
-    cursor: pointer;
+  h1 {
+    font-size: 2.5em;
     color: #ff4d6d;
-    font-size: 1.3rem;
-    user-select: none;
-    transition: transform 0.2s ease;
-}
+    margin-bottom: 40px;
+    /* Glow removed */
+  }
+  @keyframes flicker {
+    0% { opacity: 1; text-shadow: 0 0 5px #ff4d6d, 0 0 10px #ff4d6d; }
+    50% { opacity: 0.8; text-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff4d6d; }
+    100% { opacity: 1; text-shadow: 0 0 5px #ff4d6d, 0 0 10px #ff4d6d; }
+  }
 
-/* slight tap animation */
-#togglePassword:active {
-    transform: translateY(-50%) scale(0.9);
-}
+  /* Biometric button */
+  #bioBtn {
+    position: relative;
+    padding: 18px 40px 18px 60px;
+    border: none;
+    border-radius: 15px;
+    background-color: #ff4d6d;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 0 15px #ff4d6d;
+    transition: 0.3s;
+    overflow: hidden;
+  }
 
-    
+  #bioBtn:hover {
+    box-shadow: 0 0 30px #ff4d6d;
+  }
 
-    button {
-        padding: 12px 30px;
-        font-size: 1.2rem;
-        border-radius: 12px;
-        background: #ff4d6d;
-        color: white;
-        cursor: pointer;
-        border:none;
-        transition: all 0.3s ease;
-    }
+  /* Fingerprint icon */
+  #bioBtn::before {
+    content: "🔒";
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    animation: pulse 1.5s infinite alternate;
+  }
 
-    button:hover {
-        background: #fff;
-        color: #ff4d6d;
-        border: 2px solid #ff4d6d;
-    }
+  @keyframes pulse {
+    0% { text-shadow: 0 0 5px #fff, 0 0 10px #ff4d6d; transform: translateY(-50%) scale(1); }
+    50% { text-shadow: 0 0 15px #fff, 0 0 25px #ff4d6d; transform: translateY(-50%) scale(1.1); }
+    100% { text-shadow: 0 0 5px #fff, 0 0 10px #ff4d6d; transform: translateY(-50%) scale(1); }
+  }
 
-    #error {
-        color: #ff4d6d;
-        margin-top: 15px;
-        display: none;
-        font-size: 1rem;
-    }
+  #message {
+    margin-top: 25px;
+    font-size: 1.2em;
+    color: #ff4d6d;
+    text-shadow: 0 0 5px #ff4d6d, 0 0 10px #ff4d6d, 0 0 15px #ff4d6d;
+    transition: 0.3s;
+  }
 </style>
 </head>
 <body>
 
-<div id="container">
-    <h1>Enter Password</h1>
-    <div class="input-container">
-        <input type="password" id="passwordInput" placeholder="Password">
-        <span id="togglePassword">👁️</span>
-    </div>
-    <button id="enterBtn">Enter</button>
-    <div id="error">Incorrect password!</div>
-</div>
+  <div class="container">
+    <h1>Biometric Login</h1>
+    <button id="bioBtn">Set Up Biometrics</button>
+    <div id="message"></div>
+  </div>
 
 <script>
-const correctPassword = "BhigTerry"; // your secret password
-const btn = document.getElementById('enterBtn');
-const input = document.getElementById('passwordInput');
-const error = document.getElementById('error');
+const message = document.getElementById('message');
+const bioBtn = document.getElementById('bioBtn');
 
-btn.addEventListener('click', () => {
-    if(input.value === correctPassword){
-        document.getElementById('container').style.opacity = 0; // fade out
-        setTimeout(() => {
-            window.location.href = "gift.html"; // go to gift page
-        }, 1000); 
+// Use localStorage to simulate server storage
+function saveCredential(credential) {
+  const id = btoa(String.fromCharCode(...new Uint8Array(credential.rawId)));
+  localStorage.setItem('fingerprintCredential', id);
+  localStorage.setItem('biometricSet', 'true');
+}
+
+function getStoredCredential() {
+  const id = localStorage.getItem('fingerprintCredential');
+  return id ? Uint8Array.from(atob(id), c => c.charCodeAt(0)) : null;
+}
+
+// Random challenge for WebAuthn
+function generateChallenge() {
+  return new Uint8Array(32);
+}
+
+// Update button text if biometric already set
+if(localStorage.getItem('biometricSet')) {
+  bioBtn.textContent = "Login with Biometrics";
+}
+
+// ----- Button Click -----
+bioBtn.addEventListener('click', async () => {
+  try {
+    if(!localStorage.getItem('biometricSet')) {
+      // Register biometric
+      const publicKey = {
+        challenge: generateChallenge(),
+        rp: { name: "Demo Site" },
+        user: {
+          id: Uint8Array.from('demo_user', c => c.charCodeAt(0)),
+          name: "demo_user",
+          displayName: "Demo User"
+        },
+        pubKeyCredParams: [{ alg: -7, type: "public-key" }],
+        timeout: 60000,
+        attestation: "direct"
+      };
+      const credential = await navigator.credentials.create({ publicKey });
+      saveCredential(credential);
+      bioBtn.textContent = "Login with Biometrics";
+      message.textContent = "Biometric setup successful!";
     } else {
-        error.style.display = "block";
-        input.value = "";
-        input.focus();
+      // Login
+      const storedId = getStoredCredential();
+      if(!storedId) {
+        message.textContent = "Error: No biometric found.";
+        return;
+      }
+      const publicKey = {
+        challenge: generateChallenge(),
+        allowCredentials: [{ id: storedId, type: "public-key" }],
+        timeout: 60000
+      };
+      await navigator.credentials.get({ publicKey });
+      message.textContent = "Login successful!";
+      setTimeout(() => {
+        window.location.href = "gift.html";
+      }, 800);
     }
+  } catch(err) {
+    message.textContent = `Error: ${err}`;
+  }
 });
-
-
-const toggle = document.getElementById('togglePassword');
-const passwordInput = document.getElementById('passwordInput');
-
-toggle.addEventListener('click', () => {
-    if(passwordInput.type === "password"){
-        passwordInput.type = "text";
-        toggle.textContent = "🙈";
-    } else {
-        passwordInput.type = "password";
-        toggle.textContent = "👁️";
-    }
-});
-    
-// allow pressing Enter key
-input.addEventListener('keyup', (e) => {
-    if(e.key === "Enter") btn.click();
-});
-
-    
 </script>
-
 </body>
 </html>
